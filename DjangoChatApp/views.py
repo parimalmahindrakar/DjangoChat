@@ -34,3 +34,18 @@ def account_view(request, *args, **kwargs):
 		context['is_friend'] = is_friend
 		context['BASE_URL'] = settings.BASE_URL
 		return render(request, "DjangoChatApp/account.html", context)
+
+
+def account_search_view(request, *args, **kwargs):
+	context = {}
+	if request.method == "GET":
+		search_query = request.GET.get("q")
+		if len(search_query) > 0:
+			search_results = Account.objects.filter(email__icontains=search_query) | Account.objects.filter(username__icontains=search_query)
+			search_results = search_results.distinct()
+			accounts = []
+			for account in search_results:
+				accounts.append((account,False))
+			context['accounts'] = accounts
+	return render(request, "DjangoChatApp/search_results.html",context)
+

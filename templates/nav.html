@@ -8,8 +8,8 @@
         <h5 class="mr-3 font-weight-normal justify-content-start">
             <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
         </h5>
-        <form class="search-bar justify-content-start">
-            <input type="text" class="form-control" name="q" id="id_q_large" placeholder="Search...">
+        <form class="search-bar justify-content-start" onsubmit="return executeQuery();">
+            <input type="text" class="form-control" name="q" id="id_q_large" placeholder="Search..." >
         </form>
 
         <div class="d-flex flex-row-reverse flex-grow-1">
@@ -45,7 +45,7 @@
                                 src="{{request.user.profile_image.url}}" style="cursor: pointer;" alt="codingwithmitch logo"
                                 width="40" height="40">
                             <div class="dropdown-menu" aria-labelledby="id_profile_links">
-                                <a class="dropdown-item" href="#">Account</a>
+                                <a class="dropdown-item" href="{% url 'account_view' request.user.id %}">Account</a>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
         <h5 class="font-weight-normal">
             <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
         </h5>
-        <form class="search-bar justify-content-start">
+        <form class="search-bar justify-content-start"  onsubmit="return executeQuery();">
             <input type="text" class="form-control" name="q" id="id_q_small" placeholder="Search...">
         </form>
         <div class="d-flex flex-row-reverse flex-grow-1">
@@ -80,7 +80,7 @@
                                 src="{% static 'images/puser.svg' %}" alt="codingwithmitch logo"
                                 width="40" height="40">
                             <div class="dropdown-menu" aria-labelledby="id_profile_links">
-                                <a class="dropdown-item" href="#">Account</a>
+                                <a class="dropdown-item" href="{% url 'account_view' request.user.id  %}">Account</a>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                             </div>
                         </div>
@@ -95,3 +95,13 @@
     </div>
     <!-- END SMALL SCREENS -->
 </div>
+<script>
+    function executeQuery() {
+        var query = $("#id_q_small").val();
+        if (query == "") {
+            var query = $("#id_q_large").val();
+        }
+        window.location.replace("{% url 'account_search_view' %}?q="+query)
+        return false
+    }
+</script>
