@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'josef';
+    src: local('josef'), url('../fonts/JosefinSans-Light.ttf') format('opentype');
+}
+body {
+    font-family: 'josef';
+}
